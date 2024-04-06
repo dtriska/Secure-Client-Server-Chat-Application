@@ -43,6 +43,7 @@ int main(int argc , char *argv[])
     // Set address struct
     address.sin_family = AF_INET;   
     address.sin_addr.s_addr = INADDR_ANY; // change to ip of actual server
+    // address.sin_addr.s_addr = inet_addr(""); // Replace with computer IP address
     address.sin_port = htons(PORT);   
 
     // Binds socket to address

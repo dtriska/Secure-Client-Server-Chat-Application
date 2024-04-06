@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     serv_addr.sin_port = htons(PORT);
 
     // Handle stuff that goes wrong
-    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0) {
+    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0) { // Replace 127 with actual IP
         printf("\nInvalid address/ Address not supported \n");
         return -1;
     }
