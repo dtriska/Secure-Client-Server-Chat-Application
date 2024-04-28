@@ -8,7 +8,7 @@ from tkinter import ttk
 from datetime import datetime
 
 HEADER_LENGTH = 10
-IP = "127.0.0.1"
+IP = "127.0.0.1" # 127 is local address, should change if running on two different machines
 PORT = 8888 
 
 # Tkinter setup
@@ -48,6 +48,7 @@ def send_message(event=None):
         message_entry.delete(0, tk.END)
 
 def receive_messages():
+        # continuosly receive messages from the server
     while True:
         try:
             while True:
@@ -63,18 +64,20 @@ def receive_messages():
                 timestamp = datetime.now().strftime("%H:%M:%S")  # Get current timestamp
                 messages_text.insert(tk.END, f'{timestamp} {username} > {message}\n')
                 messages_text.see(tk.END)  # Scroll to the end
-
+        # I/O error handling
         except IOError as e:
             if e.errno != errno.EAGAIN and e.errno != errno.EWOULDBLOCK:
                 print('Reading error: {}'.format(str(e)))
                 sys.exit()
             continue
+        # other exceptions (just good practice)
         except Exception as e:
             print('Reading error: '.format(str(e)))
             sys.exit()
-
+# Receive thread is used to handle message from server continusosly
+# We dont block main thread from sending messages
 receive_thread = threading.Thread(target=receive_messages)
-receive_thread.daemon = True
+receive_thread.daemon = True  # daemon makes this thread terminate when the main thread terminates
 receive_thread.start()
 
 root.bind("<Return>", send_message)
