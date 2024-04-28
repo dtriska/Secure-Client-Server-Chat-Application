@@ -10,13 +10,13 @@ PORT = 8888
 # Tkinter setup
 root = tk.Tk()
 root.title("Chat Server")
-root.configure(bg="#F0F0F0")
+root.configure(bg="#202020")  # Set background color to black
 
 # Custom Fonts
 font_style = ("Arial", 12)
 
 # Text widget to display messages
-messages_text = tk.Text(root, height=20, width=50, font=font_style)
+messages_text = tk.Text(root, height=20, width=50, font=font_style, bg="#202020", fg="#FF6B6B")  # Set text color to red and background color to black
 messages_text.pack()
 
 # Function to receive a new message from client
