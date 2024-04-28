@@ -13,7 +13,7 @@ PORT = 8888
 
 # Tkinter setup
 root = tk.Tk()
-root.title("Chat Application")
+root.title("Chat Client")
 root.configure(bg="#202020")  # Set background color to black
 
 # Custom Fonts
