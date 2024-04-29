@@ -14,36 +14,36 @@ PORT = 8888
 # Tkinter setup
 root = tk.Tk()
 root.title("Chat Client")
-root.configure(bg="#202020")  # Set background color to black
 
 
 # creating two frames as child of the root
 login_frame = tk.Frame(root)
 main_frame = tk.Frame(root)
 
-login_frame.grid(row=0,column=0,sticky="news")
-main_frame.grid(row=0,column=0,sticky="news")
+for frame in (login_frame, main_frame):
+    frame.configure(bg="#202020") # set background to black
+    frame.grid(row = 0, column = 0, sticky = "news")
 
 # Custom Fonts
 font_style = ("Arial", 12)
 
 ## tkinter widgets for login frame
 title_label = tk.Label(login_frame, text="Chat App Client", font=font_style, bg="#202020", fg="#00FF00")  # Set text color to light green
-title_label.pack() # change to grid later
+title_label.grid(row = 0, column = 0, columnspan = 2, sticky = "news")
 username_label = tk.Label(login_frame, text="Username:", font=font_style, bg="#202020", fg="#00FF00")  # Set text color to light green
-username_label.pack() # change to grid later
+username_label.grid(row = 1, column = 0, sticky = "news")
 username_entry = tk.Entry(login_frame, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
-username_entry.pack() # change to grid later 
+username_entry.grid(row = 1, column = 1, sticky = "news")
 username_entry.focus_set()
 
 ### tkinter widgets for main frame
 # Text widget to display messages
 messages_text = tk.Text(main_frame, height=20, width=50, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
-messages_text.pack() # change to grid later
+messages_text.grid(row = 0, column = 0, columnspan = 2, sticky = "news")
 
 # Entry field for sending messages
 message_entry = tk.Entry(main_frame, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
-message_entry.pack() # change to grid later 
+message_entry.grid(row = 1, column = 0, sticky = "news") 
 
 # the buttons need to be defined after the following function declarations
 
@@ -102,11 +102,11 @@ def login():
 
 # login button for the login frame
 send_button = tk.Button(login_frame, text="Login", command=login, font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
-send_button.pack(pady=5)
+send_button.grid(row = 2, column = 0,columnspan = 2, sticky = "news", pady=5)
 
 # send message button for main frame
 send_button = tk.Button(main_frame, text="Send", command=lambda:send_message(message_entry), font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
-send_button.pack(pady=5)
+send_button.grid(row = 1, column = 1, sticky = "news")
 
 # by default start with the login frame
 login_frame.tkraise()
