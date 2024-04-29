@@ -26,6 +26,7 @@ for frame in (login_frame, main_frame):
 
 # Custom Fonts
 font_style = ("Arial", 12)
+font_style_bold = ("Arial", 12, "bold")
 
 ## tkinter widgets for login frame
 title_label = tk.Label(login_frame, text="Chat App Client", font=font_style, bg="#202020", fg="#00FF00")  # Set text color to light green
@@ -41,6 +42,12 @@ username_entry.focus_set()
 messages_text = tk.Text(main_frame, height=20, width=50, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
 messages_text.configure(state="disabled", borderwidth=0,background=main_frame.cget('background')) # disable the text widget to make it read-only but style it the same as normal
 messages_text.grid(row = 0, column = 0, columnspan = 2, sticky = "news")
+
+# these settings augment the formatting for tagged text; see receive_messages to see what text is affected by what tag
+messages_text.tag_configure("timestamp_tag", foreground="#A4A4A4")
+messages_text.tag_configure("my_username_tag", foreground="#2dfcd9", font=font_style_bold)
+messages_text.tag_configure("my_text_tag", foreground="#2dfcd9")
+messages_text.tag_configure("other_username_tag", font=font_style_bold)
 
 # Entry field for sending messages
 message_entry = tk.Entry(main_frame, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
@@ -78,7 +85,10 @@ def receive_messages():
                 timestamp = datetime.now().strftime("%H:%M:%S")  # Get current timestamp
                 # because it is disabled to make it read-only, you need to temporarily enable it to edit it
                 messages_text.configure(state="normal")
-                messages_text.insert(tk.END, f'{timestamp} {username} > {message}\n')
+                # the message itself is split in three because i like fun colors.
+                messages_text.insert(tk.END, f'[{timestamp}] ', "timestamp_tag")
+                messages_text.insert(tk.END, f'{username}', "my_username_tag" if my_username == username else "other_username_tag")
+                messages_text.insert(tk.END, f' > {message}\n', "my_text_tag" if my_username == username else "")
                 messages_text.see(tk.END)  # Scroll to the end
                 messages_text.configure(state="disabled", borderwidth=0,background=main_frame.cget('background'))
         # I/O error handling
@@ -101,6 +111,8 @@ receive_thread.start()
 root.bind("<Return>", send_message)
 
 def login():
+    global my_username
+    my_username = username_entry.get()
     send_message(username_entry)
     main_frame.tkraise()
 
