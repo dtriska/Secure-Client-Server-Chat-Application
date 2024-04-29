@@ -15,10 +15,10 @@ PORT = 8888
 root = tk.Tk()
 root.title("Chat Client")
 root.geometry("400x300") # added a fixed size for the login screen
-root.resizable(0,0) # check if screen is resizable
+root.resizable(True,True) # check if screen is resizable
 
 root.columnconfigure(0,weight=1)
-root.columnconfigure(1,weight=5)
+root.columnconfigure(1,weight=3)
 
 # creating two frames as child of the root
 login_frame = tk.Frame(root)
