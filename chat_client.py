@@ -14,7 +14,11 @@ PORT = 8888
 # Tkinter setup
 root = tk.Tk()
 root.title("Chat Client")
+root.geometry("400x300") # added a fixed size for the login screen
+root.resizable(0,0) # check if screen is resizable
 
+root.columnconfigure(0,weight=1)
+root.columnconfigure(1,weight=5)
 
 # creating two frames as child of the root
 login_frame = tk.Frame(root)
@@ -32,9 +36,9 @@ font_style_bold = ("Arial", 12, "bold")
 title_label = tk.Label(login_frame, text="Chat App Client", font=font_style, bg="#202020", fg="#00FF00")  # Set text color to light green
 title_label.grid(row = 0, column = 0, columnspan = 2, sticky = "news")
 username_label = tk.Label(login_frame, text="Username:", font=font_style, bg="#202020", fg="#00FF00")  # Set text color to light green
-username_label.grid(row = 1, column = 0, sticky = "news")
+username_label.grid(row = 1, column = 0, sticky = tk.W, padx=5,pady=5)
 username_entry = tk.Entry(login_frame, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
-username_entry.grid(row = 1, column = 1, sticky = "news")
+username_entry.grid(row = 1, column = 1, sticky = tk.E, padx=5,pady=5)
 username_entry.focus_set()
 
 ### tkinter widgets for main frame
@@ -118,7 +122,7 @@ def login():
 
 # login button for the login frame
 send_button = tk.Button(login_frame, text="Login", command=login, font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
-send_button.grid(row = 2, column = 0,columnspan = 2, sticky = "news", pady=5)
+send_button.grid(row = 2, column = 1, sticky = tk.E, padx=5,pady=5)
 
 # send message button for main frame
 send_button = tk.Button(main_frame, text="Send", command=lambda:send_message(message_entry), font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
