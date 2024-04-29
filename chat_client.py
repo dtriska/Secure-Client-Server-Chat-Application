@@ -89,7 +89,7 @@ def receive_messages():
             continue
         # other exceptions (just good practice)
         except Exception as e:
-            print('Reading error: '.format(str(e)))
+            print('Reading error: {}'.format(str(e)))
             sys.exit()
 
 # Receive thread is used to handle message from server continuously
