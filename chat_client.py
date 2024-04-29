@@ -39,6 +39,7 @@ username_entry.focus_set()
 ### tkinter widgets for main frame
 # Text widget to display messages
 messages_text = tk.Text(main_frame, height=20, width=50, font=font_style, bg="#202020", fg="#00FF00")  # Set text and background color to black and light green respectively
+messages_text.configure(state="disabled", borderwidth=0,background=main_frame.cget('background')) # disable the text widget to make it read-only but style it the same as normal
 messages_text.grid(row = 0, column = 0, columnspan = 2, sticky = "news")
 
 # Entry field for sending messages
@@ -75,8 +76,11 @@ def receive_messages():
                 message_length = int(message_header.decode('utf-8').strip())
                 message = client_socket.recv(message_length).decode('utf-8')
                 timestamp = datetime.now().strftime("%H:%M:%S")  # Get current timestamp
+                # because it is disabled to make it read-only, you need to temporarily enable it to edit it
+                messages_text.configure(state="normal")
                 messages_text.insert(tk.END, f'{timestamp} {username} > {message}\n')
                 messages_text.see(tk.END)  # Scroll to the end
+                messages_text.configure(state="disabled", borderwidth=0,background=main_frame.cget('background'))
         # I/O error handling
         except IOError as e:
             if e.errno != errno.EAGAIN and e.errno != errno.EWOULDBLOCK:
