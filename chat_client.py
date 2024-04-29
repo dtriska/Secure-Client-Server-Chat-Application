@@ -52,8 +52,8 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((IP, PORT))
 client_socket.setblocking(False)
 
-def send_message(event=None):
-    message = message_entry.get()
+def send_message(entry,event=None):
+    message = entry.get()
     if message:
         message = message.encode('utf-8')
         message_header = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
@@ -97,7 +97,7 @@ receive_thread.start()
 root.bind("<Return>", send_message)
 
 def login():
-    # todo: send a message containing the provided username here
+    send_message(username_entry)
     main_frame.tkraise()
 
 # login button for the login frame
@@ -105,7 +105,7 @@ send_button = tk.Button(login_frame, text="Login", command=login, font=font_styl
 send_button.pack(pady=5)
 
 # send message button for main frame
-send_button = tk.Button(main_frame, text="Send", command=send_message, font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
+send_button = tk.Button(main_frame, text="Send", command=lambda:send_message(message_entry), font=font_style, bg="#00FF00", fg="#202020", activebackground="#00FF00", activeforeground="#202020")  # Set button colors to light green and black
 send_button.pack(pady=5)
 
 # by default start with the login frame
