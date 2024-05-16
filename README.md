@@ -22,7 +22,7 @@ The Secure Client-Server Chat Application provides a platform for multiple clien
 
 1. Clone the repository.
 2. Navigate to the directory containing the project files.
-3. Run the server script.
+3. Run the python server script (cpp is functional on Linux/Mac distros but doesn't have any front end features).
 4. Run the client script on each client's machine.
 5. Have the first client generate a key
 6. Client then shares key securley to all other clients
