@@ -64,7 +64,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((IP, PORT))
 client_socket.setblocking(False)
 
-# Predefined Fernet key (replace with your actual key)
+# Predefined Fernet key 
 predefined_key = b'c9yHrqQkOrMcAeLQdUPi8cbqFvtqKnw_V8N-vbJYWXc='
 # Initialize Fernet with the predefined key
 fernet = Fernet(predefined_key)
