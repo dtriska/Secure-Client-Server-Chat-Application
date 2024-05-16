@@ -64,7 +64,7 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_socket.connect((IP, PORT))
 client_socket.setblocking(False)
 
-# Predefined Fernet key 
+# Predefined Fernet key (Must be used by both clients)
 predefined_key = b'c9yHrqQkOrMcAeLQdUPi8cbqFvtqKnw_V8N-vbJYWXc='
 # Initialize Fernet with the predefined key
 fernet = Fernet(predefined_key)
@@ -77,6 +77,16 @@ def send_message(entry, event=None):
         message_header = f"{len(encrypted_message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + encrypted_message)
         message_entry.delete(0, tk.END)
+
+# Send Usernames
+def send_username(entry, event=None):
+    message = entry.get()
+    if message:
+        message_data = message.encode('utf-8')
+        message_header = f"{len(message_data):<{HEADER_LENGTH}}".encode('utf-8')
+        client_socket.send(message_header + message_data)
+        message_entry.delete(0, tk.END)
+
 
 # Method to continuously receive messages
 def receive_messages():
@@ -96,10 +106,10 @@ def receive_messages():
             message_length = int(message_header.decode('utf-8').strip())
             encrypted_message = client_socket.recv(message_length)
             
-            print("Received encrypted message:", encrypted_message)  # Debugging print
+            print("Received encrypted message:", encrypted_message)  # Debugging print and shows encryption
             # Decrypt the message
             decrypted_message = fernet.decrypt(encrypted_message).decode('utf-8')
-            print("Decrypted message:", decrypted_message)  # Debugging print
+            print("Decrypted message:", decrypted_message)  # Debugging print and shows successful decryption
             
             timestamp = datetime.now().strftime("%H:%M:%S")
             messages_text.configure(state="normal")
@@ -137,7 +147,7 @@ root.bind("<Return>", lambda event: start_sending_thread())
 def login():
     global my_username
     my_username = username_entry.get()
-    send_message(username_entry)
+    send_username(username_entry)
     start_receiving_thread()
     main_frame.tkraise()
 
