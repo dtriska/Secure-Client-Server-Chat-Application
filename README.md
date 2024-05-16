@@ -13,7 +13,7 @@ The Secure Client-Server Chat Application provides a platform for multiple clien
 
 ## Features
 
-- Secure communication between clients and server.
+- Secure communication between clients and server using encryption.
 - Ability to handle up to 10 clients simultaneously.
 - Broadcasting of messages from one client to all other clients.
 - User-friendly interface for easy interaction.
@@ -24,5 +24,8 @@ The Secure Client-Server Chat Application provides a platform for multiple clien
 2. Navigate to the directory containing the project files.
 3. Run the server script.
 4. Run the client script on each client's machine.
-5. Connect to the server using the provided IP address and port number.
-6. Start sending and receiving messages securely.
+5. Have the first client generate a key
+6. Client then shares key securley to all other clients
+7. Connect to the server using the provided IP address and port number.
+8. Enter the Fernet key for encryption when prompted.
+9. Start sending and receiving messages securely.
